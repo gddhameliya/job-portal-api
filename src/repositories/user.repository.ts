@@ -23,19 +23,10 @@ export const userRepository = {
   findUser: async (req: Request) => {
     const criteria: _query = {
       ...(req.body.email && { email: req.body.email }),
-      ...(req.body.mobile && { mobile: req.body.mobile }),
-      ...(req.body.phoneCountry && { phoneCountry: req.body.phoneCountry }),
     };
 
     return await db.User.findOne({
       where: criteria,
-      include: [
-        {
-          model: db.Role,
-          as: "role",
-          attributes: ["name"],
-        },
-      ],
       raw: true,
       nest: true,
     });
